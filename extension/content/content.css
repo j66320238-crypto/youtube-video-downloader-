@@ -1,0 +1,165 @@
+/* Yak — elements that live inside YouTube's own DOM (thumbnail + watch page buttons) */
+
+.yak-thumb-btn {
+  all: unset;
+  box-sizing: border-box;
+  position: absolute !important;
+  left: 8px !important;
+  bottom: 8px !important;
+  z-index: 60 !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 11px !important;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)) padding-box,
+    rgba(8, 10, 14, 0.72) border-box !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.2) !important;
+  backdrop-filter: blur(14px) saturate(1.2) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  opacity: 0.94 !important;
+  transform: translateY(0) scale(0.96) !important;
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.2s ease !important;
+  font-family: "Manrope", "Segoe UI", system-ui, sans-serif !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  animation: yak-thumb-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+
+.yak-thumb-btn:hover {
+  opacity: 1 !important;
+  transform: translateY(-2px) scale(1) !important;
+  border-color: rgba(255, 196, 107, 0.65) !important;
+  background:
+    linear-gradient(135deg, var(--yak-page-acc-1, #ffc46b), var(--yak-page-acc-2, #ff7a18) 60%, var(--yak-page-acc-3, #ff4d2e)) padding-box !important;
+  box-shadow: 0 12px 28px -8px rgba(255, 122, 24, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+.yak-thumb-btn:active {
+  transform: translateY(0) scale(0.94) !important;
+}
+
+.yak-thumb-btn:focus-visible {
+  outline: 2px solid var(--yak-page-acc-1, #ffc46b) !important;
+  outline-offset: 2px !important;
+}
+
+.yak-thumb-btn svg {
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
+  pointer-events: none !important;
+}
+
+.yak-thumb-btn.is-busy {
+  pointer-events: none !important;
+}
+
+.yak-thumb-btn.is-busy svg {
+  opacity: 0 !important;
+}
+
+.yak-thumb-btn.is-busy::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50% !important;
+  border: 2px solid rgba(255, 255, 255, 0.25) !important;
+  border-top-color: #ffc46b !important;
+  animation: yak-spin 0.7s linear infinite !important;
+}
+
+.yak-thumb-btn.is-done {
+  background: linear-gradient(135deg, #5ee08a, #14b866) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #06230f !important;
+}
+
+.yak-thumb-btn.is-done::before {
+  content: "" !important;
+  width: 9px !important;
+  height: 5px !important;
+  border-left: 2.2px solid currentColor !important;
+  border-bottom: 2.2px solid currentColor !important;
+  transform: rotate(-45deg) translate(1px, -1px) !important;
+  position: absolute !important;
+}
+
+.yak-thumb-btn.is-done svg {
+  opacity: 0 !important;
+}
+
+/* Watch page pill */
+
+.yak-watch-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  height: 36px !important;
+  padding: 0 15px !important;
+  margin-right: 8px !important;
+  border-radius: 18px !important;
+  border: none !important;
+  background: linear-gradient(135deg, var(--yak-page-acc-1, #ffc46b), var(--yak-page-acc-2, #ff7a18) 58%, var(--yak-page-acc-3, #ff4d2e)) !important;
+  color: #1c0e02 !important;
+  font-family: "Manrope", "Segoe UI", system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1px !important;
+  cursor: pointer !important;
+  box-shadow: 0 10px 22px -10px rgba(255, 122, 24, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, filter 0.2s ease !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  animation: yak-thumb-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+
+.yak-watch-btn:hover {
+  transform: translateY(-1px) !important;
+  filter: saturate(1.08) brightness(1.03) !important;
+  box-shadow: 0 16px 30px -12px rgba(255, 122, 24, 1), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+.yak-watch-btn:active {
+  transform: scale(0.97) !important;
+}
+
+.yak-watch-btn:focus-visible {
+  outline: 2px solid var(--yak-page-acc-1, #ffc46b) !important;
+  outline-offset: 2px !important;
+}
+
+.yak-watch-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: none !important;
+}
+
+@keyframes yak-thumb-in {
+  from { opacity: 0; transform: translateY(5px) scale(0.9); }
+  to { opacity: 0.94; transform: translateY(0) scale(0.96); }
+}
+
+@keyframes yak-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yak-thumb-btn,
+  .yak-watch-btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}

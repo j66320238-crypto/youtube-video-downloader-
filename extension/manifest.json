@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "Yak — YouTube Downloader",
+  "short_name": "Yak",
+  "version": "1.0.0",
+  "description": "Any YouTube video, one click. Up to 8K, MP3 audio, live speed, custom folder, cinematic UI.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "notifications",
+    "alarms",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "http://127.0.0.1:8787/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Yak — download this video",
+    "default_popup": "ui/popup.html",
+    "default_icon": {
+      "16": "assets/icons/16.png",
+      "32": "assets/icons/32.png",
+      "48": "assets/icons/48.png",
+      "128": "assets/icons/128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/16.png",
+    "32": "assets/icons/32.png",
+    "48": "assets/icons/48.png",
+    "128": "assets/icons/128.png"
+  },
+  "options_ui": {
+    "page": "ui/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/shadow.css",
+        "assets/font/Manrope.woff2",
+        "assets/icons/*",
+        "ui/*"
+      ],
+      "matches": ["*://*.youtube.com/*"]
+    }
+  ]
+}

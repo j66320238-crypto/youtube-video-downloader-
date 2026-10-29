@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Harness · Yak content script</title>
+<meta property="og:image" content="https://i.ytimg.com/vi/aqz-KE-bpKQ/hqdefault.jpg" />
+<link rel="stylesheet" href="/extension/content/content.css" />
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0;
+    background: #0f0f0f;
+    color: #f1f1f1;
+    font-family: "Roboto", "Segoe UI", sans-serif;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    position: sticky;
+    top: 0;
+    background: #0f0f0f;
+    z-index: 5;
+  }
+  .logo { font-weight: 800; letter-spacing: -.5px; font-size: 18px; }
+  .search {
+    flex: 1;
+    max-width: 420px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: #121212;
+    padding: 0 14px;
+    color: #aaa;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+  }
+  .layout { display: grid; grid-template-columns: 1fr 320px; gap: 26px; padding: 22px; }
+  .watch { max-width: 960px; }
+  .player {
+    aspect-ratio: 16/9;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #223, #0b0b12);
+    display: grid;
+    place-items: center;
+    color: #556;
+    font-size: 13px;
+  }
+  h1.ytd-watch-metadata { font-size: 20px; margin: 14px 0 6px; }
+  #owner { display: flex; align-items: center; gap: 10px; margin: 10px 0 14px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: #2a2a2a; }
+  ytd-channel-name a { color: #f1f1f1; font-size: 13px; font-weight: 600; text-decoration: none; }
+  #top-level-buttons-computed { display: flex; gap: 8px; }
+  .chip {
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: #272727;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    color: #f1f1f1;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 18px 14px;
+    padding: 18px 22px 60px;
+  }
+  ytd-rich-item-renderer { display: block; }
+  ytd-rich-grid-media { display: block; }
+  a#thumbnail {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a1a;
+    aspect-ratio: 16/9;
+  }
+  a#thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .meta { padding-top: 10px; }
+  .vtitle { font-size: 13.5px; font-weight: 600; line-height: 1.35; margin: 0; }
+  .vchan { font-size: 11.5px; color: #aaa; margin-top: 4px; }
+  .ad-badge { font-size: 10px; color: #ffb74d; margin-top: 2px; }
+  aside.side h3 { font-size: 13px; margin: 0 0 10px; color: #aaa; }
+  .mini { display: grid; grid-template-columns: 120px 1fr; gap: 8px; margin-bottom: 12px; }
+  .mini a#thumbnail { aspect-ratio: 16/9; }
+  .mini b { font-size: 12px; font-weight: 600; display: block; line-height: 1.35; }
+  .mini span { font-size: 11px; color: #999; }
+  .hintbox {
+    margin: 0 22px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px dashed rgba(255,255,255,.14);
+    font-size: 12px;
+    color: #9aa;
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <span class="logo">YouTube</span>
+    <span class="search">Search</span>
+    <span style="margin-left:auto;font-size:11px;color:#777" id="harnessState">harness</span>
+  </div>
+
+  <div class="layout">
+    <main class="watch">
+      <div class="player">video player mock</div>
+      <h1 class="ytd-watch-metadata"><yt-formatted-string>Big Buck Bunny 60fps 4K — Official Blender Foundation Short Film</yt-formatted-string></h1>
+      <div id="owner">
+        <span class="avatar"></span>
+        <ytd-channel-name><a href="/@Blender">Blender</a></ytd-channel-name>
+        <span style="margin-left:auto;display:flex;gap:8px" id="top-level-buttons-computed">
+          <button class="chip">Like</button>
+          <button class="chip">Share</button>
+        </span>
+      </div>
+      <p class="hintbox">Mock watch page — Yak should inject a watch-page download pill into the row above.</p>
+    </main>
+
+    <aside class="side">
+      <h3>Up next</h3>
+      <div class="mini">
+        <a id="thumbnail" href="https://www.youtube.com/watch?v=jNQXAC9IVRw">
+          <img src="https://i.ytimg.com/vi/jNQXAC9IVRw/mqdefault.jpg" alt="" />
+        </a>
+        <div><b>Me at the zoo</b><span>jawed</span></div>
+      </div>
+      <div class="mini">
+        <a id="thumbnail" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+          <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="" />
+        </a>
+        <div><b>Sample result title</b><span>Some channel</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="grid" id="grid">
+    <ytd-rich-item-renderer>
+      <ytd-rich-grid-media>
+        <a id="thumbnail" href="https://www.youtube.com/watch?v=aqz-KE-bpKQ">
+          <img src="https://i.ytimg.com/vi/aqz-KE-bpKQ/mqdefault.jpg" alt="" />
+        </a>
+        <div class="meta">
+          <p class="vtitle">Big Buck Bunny 60fps 4K — Official Blender Foundation Short Film</p>
+          <div class="vchan">Blender · 1.9M views</div>
+        </div>
+      </ytd-rich-grid-media>
+    </ytd-rich-item-renderer>
+
+    <ytd-rich-item-renderer>
+      <ytd-rich-grid-media>
+        <a id="thumbnail" href="https://www.youtube.com/watch?v=jNQXAC9IVRw">
+          <img src="https://i.ytimg.com/vi/jNQXAC9IVRw/mqdefault.jpg" alt="" />
+        </a>
+        <div class="meta">
+          <p class="vtitle">Me at the zoo</p>
+          <div class="vchan">jawed · 300M views</div>
+        </div>
+      </ytd-rich-grid-media>
+    </ytd-rich-item-renderer>
+
+    <ytd-rich-item-renderer>
+      <ytd-rich-grid-media>
+        <a id="thumbnail" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+          <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="" />
+        </a>
+        <div class="meta">
+          <p class="vtitle">Sample result title</p>
+          <div class="vchan">Some channel · 12M views</div>
+        </div>
+      </ytd-rich-grid-media>
+    </ytd-rich-item-renderer>
+
+    <ytd-rich-item-renderer>
+      <ytd-rich-grid-media>
+        <a id="thumbnail" href="https://www.youtube.com/watch?v=aqz-KE-bpKQ">
+          <img src="https://i.ytimg.com/vi/aqz-KE-bpKQ/mqdefault.jpg" alt="" />
+        </a>
+        <div class="meta">
+          <p class="vtitle">Sponsored — should be skipped</p>
+          <div class="vchan">Ad · sponsored</div>
+          <div class="ad-badge">Sponsored</div>
+        </div>
+      </ytd-rich-grid-media>
+    </ytd-rich-item-renderer>
+  </div>
+
+  <script src="/tests/chrome-stub.js"></script>
+  <script src="/extension/content/content.js"></script>
+</body>
+</html>

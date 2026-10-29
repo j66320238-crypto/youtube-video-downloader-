@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yak · Settings</title>
+  <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="bar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5.2 4.6c.7-.5 1.7-.4 2.4.2l1.9 1.6c.8.7 1 1.8.5 2.7l-.8 1.4c.8 1.7 2.1 3 3.8 3.8l1.4-.8c.9-.5 2-.3 2.7.5l1.6 1.9c.6.7.7 1.7.2 2.4l-1.1 1.6c-.6.9-1.7 1.3-2.7 1-5.5-1.6-9.6-5.7-11.2-11.2-.3-1 .1-2.1 1-2.7l1.6-1.1Z" fill="currentColor"/>
+            <path d="M14.6 3.4h6v6M20.2 3.8l-5.4 5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>
+          <div class="brand-name">Yak</div>
+          <div class="brand-sub">Settings</div>
+        </span>
+      </div>
+      <div class="bar-right">
+        <span id="saveState" class="save-state">All changes save automatically</span>
+        <span id="engine" class="engine-pill">Checking</span>
+      </div>
+    </header>
+
+    <main class="stack">
+      <section class="card hero" aria-labelledby="engineTitle">
+        <div class="hero-copy">
+          <div class="eyebrow">Download engine</div>
+          <h1 id="engineTitle">Local helper</h1>
+          <p>Yak uses a tiny local server with yt-dlp + ffmpeg. It never uploads anything and only listens on <span class="mono">127.0.0.1</span>.</p>
+          <div class="hero-actions">
+            <button id="recheck" class="btn">Re-check</button>
+            <button id="copyStart" class="btn">Copy start command</button>
+          </div>
+        </div>
+        <div class="hero-status">
+          <div class="stat">
+            <span class="stat-label">Engine</span>
+            <span id="engineText" class="stat-value">Checking…</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">yt-dlp</span>
+            <span id="ytdlpText" class="stat-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">ffmpeg</span>
+            <span id="ffmpegText" class="stat-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Node</span>
+            <span id="nodeText" class="stat-value mono">—</span>
+          </div>
+        </div>
+        <div id="offlineHint" class="offline-hint hidden">
+          <strong>Helper is not running.</strong>
+          Open the project folder, go to <span class="mono">helper</span> and double-click <span class="mono">start-helper.bat</span>. Keep that window open while downloading.
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="dlTitle">
+        <div class="section-head">
+          <h2 id="dlTitle">Downloads</h2>
+          <span class="hint">Where files land and what gets picked by default</span>
+        </div>
+
+        <div class="row folder-row">
+          <div class="row-label">
+            <span>Save to</span>
+            <small id="folderLabel" class="mono">~/Downloads/Yak</small>
+          </div>
+          <div class="row-control">
+            <button id="pickFolder" class="btn">Choose folder</button>
+            <button id="revealFolder" class="btn">Open</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-label">
+            <span>Default quality</span>
+            <small>Used by the arrow on thumbnails</small>
+          </div>
+          <div class="row-control">
+            <select id="defaultHeight" class="select">
+              <option value="2160">2160p · 4K</option>
+              <option value="1440">1440p · QHD</option>
+              <option value="1080">1080p · Full HD</option>
+              <option value="720">720p · HD</option>
+              <option value="480">480p</option>
+              <option value="360">360p</option>
+              <option value="0">Best available</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-label">
+            <span>Container</span>
+            <small>MP4 plays everywhere, MKV keeps every codec</small>
+          </div>
+          <div class="row-control">
+            <div class="seg" id="containerSeg" role="group" aria-label="Container">
+              <button data-value="mp4">MP4</button>
+              <button data-value="mkv">MKV</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-label">
+            <span>Parallel downloads</span>
+            <small>More parallel jobs = more bandwidth used</small>
+          </div>
+          <div class="row-control slider-control">
+            <input id="concurrency" type="range" min="1" max="6" step="1" value="2" />
+            <output id="concurrencyOut" class="mono">2</output>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="audioTitle">
+        <div class="section-head">
+          <h2 id="audioTitle">Audio</h2>
+          <span class="hint">Applied to the Audio tab in the quality sheet</span>
+        </div>
+
+        <div class="row">
+          <div class="row-label">
+            <span>Format</span>
+            <small>M4A keeps the original stream, MP3 converts it</small>
+          </div>
+          <div class="row-control">
+            <div class="seg" id="audioSeg" role="group" aria-label="Audio format">
+              <button data-value="mp3">MP3</button>
+              <button data-value="m4a">M4A</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-label">
+            <span>Bitrate</span>
+            <small>Only used for MP3</small>
+          </div>
+          <div class="row-control">
+            <select id="audioBitrate" class="select">
+              <option value="320">320 kbps</option>
+              <option value="256">256 kbps</option>
+              <option value="192">192 kbps</option>
+              <option value="128">128 kbps</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="nameTitle">
+        <div class="section-head">
+          <h2 id="nameTitle">File naming</h2>
+          <span class="hint">Tokens are filled in by yt-dlp</span>
+        </div>
+        <input id="template" class="input mono" type="text" spellcheck="false" placeholder="%(title)s [%(id)s].%(ext)s" />
+        <div class="token-row">
+          <button class="token" data-token="%(title)s">title</button>
+          <button class="token" data-token="%(id)s">id</button>
+          <button class="token" data-token="%(channel)s">channel</button>
+          <button class="token" data-token="%(upload_date)s">upload_date</button>
+          <button class="token" data-token="%(resolution)s">resolution</button>
+          <button class="token" data-token="%(ext)s">ext</button>
+        </div>
+        <div class="preview">
+          <span>Preview</span>
+          <code id="templatePreview" class="mono">Lecture 12 — Systems [dQw4w9WgXcQ].mp4</code>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="extraTitle">
+        <div class="section-head">
+          <h2 id="extraTitle">Extras</h2>
+          <span class="hint">Small extras bundled with every download</span>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Subtitles</span>
+            <small>Downloads available subtitle tracks when present</small>
+          </div>
+          <label class="switch">
+            <input id="extSubtitles" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Thumbnail</span>
+            <small>Saves the cover art next to the video</small>
+          </div>
+          <label class="switch">
+            <input id="extThumbnail" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Metadata</span>
+            <small>Embeds title, channel and description tags</small>
+          </div>
+          <label class="switch">
+            <input id="extMetadata" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Finish notifications</span>
+            <small>Desktop notification when a download completes</small>
+          </div>
+          <label class="switch">
+            <input id="notify" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Auto-reveal</span>
+            <small>Opens the folder as soon as a file finishes</small>
+          </div>
+          <label class="switch">
+            <input id="autoReveal" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="lookTitle">
+        <div class="section-head">
+          <h2 id="lookTitle">Appearance</h2>
+          <span class="hint">Applies to the sheet, dock and popup</span>
+        </div>
+
+        <div class="row">
+          <div class="row-label">
+            <span>Accent</span>
+            <small>Pick the gradient that suits your setup</small>
+          </div>
+          <div class="row-control">
+            <div class="accents" id="accents" role="group" aria-label="Accent colour">
+              <button class="swatch" data-value="amber" title="Amber" aria-label="Amber"></button>
+              <button class="swatch" data-value="ice" title="Ice" aria-label="Ice"></button>
+              <button class="swatch" data-value="lime" title="Lime" aria-label="Lime"></button>
+              <button class="swatch" data-value="rose" title="Rose" aria-label="Rose"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Thumbnail buttons</span>
+            <small>Show the download arrow on every YouTube thumbnail</small>
+          </div>
+          <label class="switch">
+            <input id="showThumbButtons" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Reduce motion</span>
+            <small>Turns off the sheet and dock animations</small>
+          </div>
+          <label class="switch">
+            <input id="reduceMotion" type="checkbox" />
+            <span class="track"></span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="dataTitle">
+        <div class="section-head">
+          <h2 id="dataTitle">Data</h2>
+          <span class="hint">Local-only history kept by the helper</span>
+        </div>
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Download history</span>
+            <small id="historyText">—</small>
+          </div>
+          <div class="row-control">
+            <button id="clearHistory" class="btn">Clear history</button>
+          </div>
+        </div>
+        <div class="row toggle-row">
+          <div class="row-label">
+            <span>Reset settings</span>
+            <small>Restore every option to its default value</small>
+          </div>
+          <div class="row-control">
+            <button id="resetSettings" class="btn">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span>Yak · personal-use downloader for videos you have the rights to save.</span>
+        <span class="mono">127.0.0.1:8787</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span class="dot"></span><span id="toastText"></span>
+  </div>
+
+  <script src="options.js" type="module"></script>
+</body>
+</html>
